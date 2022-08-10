@@ -1,6 +1,6 @@
 import pandas as pd
 
-
+#Se importan los csv de cada uno de los departamentos
 ALTA_VERAPAZ = pd.read_csv('ALTA VERAPAZ.csv')
 BAJA_VERAPAZ = pd.read_csv('BAJA VERAPAZ.csv')
 CHIMALTENANGO = pd.read_csv('CHIMALTENANGO.csv')
@@ -25,17 +25,28 @@ SUCHITEPEQUEZ = pd.read_csv('SUCHITEPEQUEZ.csv')
 TOTONICAPAN = pd.read_csv('TOTONICAPAN.csv')
 ZACAPA = pd.read_csv('ZACAPA.csv')
 
-
+#Se concatenan todos los 22 dataframes
 df = pd.concat([ALTA_VERAPAZ,BAJA_VERAPAZ,CHIMALTENANGO,CHIQUIMULA,CIUDAD_CAPITAL,
                 EL_PROGRESO,ESCUINTLA,GUATEMALA,HUEHUETENANGO,IZABAL,
                 JALAPA,JUTIAPA,PETEN,QUETZALTENANGO,QUICHE,
                 RETALHULEU,SACATEPEQUEZ,SAN_MARCOS,SANTA_ROSA,SOLOLA,
                 SUCHITEPEQUEZ,TOTONICAPAN,ZACAPA], axis=0, ignore_index=True)
 
-print(df.ESTABLECIMIENTO.value_counts())
-
+#Listamos los nombres de las columnas
 list(df.keys())
 
+#Observamos los establecimientos y códigos nulos
+df['ESTABLECIMIENTO'].isna().sum()
+df['CODIGO'].isna().sum()
+
+
+#Botamos todas las filas con valores nulos en el código o establecimiento
+df=df.dropna(subset = ['CODIGO', 'ESTABLECIMIENTO'])
+
+print(df)
+
+#Contamos las repeticiones de establecimientos
+print(df.ESTABLECIMIENTO.value_counts())
 
 
 
