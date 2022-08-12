@@ -91,5 +91,28 @@ df = df.assign(DEPARTAMENTO = lambda x: np.where(x.DEPARTAMENTO == "CIUDAD CAPIT
 # Una breve exploracion muestra que la dirección se presenta como algun elemento en el siguiente conjunto
 # {"-", "--", "---", ".", ""}
 
-setFaltasDireccion = ['-', '--', '---', '.']
-df.DIRECCION = df.DIRECCION.replace(setFaltas, None)
+setFaltasDireccion = ['-', '--', '---', '.', ' ', '  ']
+df.DIRECCION = df.DIRECCION.replace(setFaltasDireccion, None)
+
+# TELEFONO
+# Multiples entradas de esta variable se encuentran sin datos. La forma en la que se
+# representa la falta de dato puede ser variada, ya sea con caracteres especiales como un único cero.
+# En otras ocasiones, el número sí es válido pero queda guardado con decimales, como 12345678.0.
+# En otros casos, un establecimiento posee dos números telefónicos. 
+# Para lidiar con todas estas posibles circunstancias, se valida la longitud del número telefónico, el cual
+# esperamos que sea 8. Si una entrada posee 8 caracteres o más, botamos la cola del dato y nos quedamos con
+# los primeros 8 caracteres. En cualquier otro caso, el número no se considera válido y la entrada se reemplaza por None. 
+
+df['TELEFONO'] = df['TELEFONO'].apply(lambda x: str(x))
+df['TELEFONO'] = df['TELEFONO'].apply(lambda x: x[0:8] if len(x) >= 8  else None)
+
+
+
+
+
+
+
+
+
+
+
