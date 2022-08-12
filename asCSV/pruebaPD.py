@@ -39,12 +39,26 @@ list(df.keys())
 #Se borran todas las filas duplicadas
 df=df.drop_duplicates()
 
-#Observamos los establecimientos y códigos nulos
-df['ESTABLECIMIENTO'].isna().sum()
-df['CODIGO'].isna().sum()
+#Observamos cuántos nulos hay por variable
+print(df['CODIGO'].isna().sum())
+print(df['DISTRITO'].isna().sum())
+print(df['DEPARTAMENTO'].isna().sum())
+print(df['MUNICIPIO'].isna().sum())
+print(df['ESTABLECIMIENTO'].isna().sum())
+print(df['DIRECCION'].isna().sum())
+print(df['TELEFONO'].isna().sum())
+print(df['SUPERVISOR'].isna().sum())
+print(df['DIRECTOR'].isna().sum())
+print(df['NIVEL'].isna().sum())
+print(df['SECTOR'].isna().sum())
+print(df['AREA'].isna().sum())
+print(df['STATUS'].isna().sum())
+print(df['MODALIDAD'].isna().sum())
+print(df['JORNADA'].isna().sum())
+print(df['PLAN'].isna().sum())
+print(df['DEPARTAMENTAL'].isna().sum())
 
-
-#Botamos todas las filas con valores nulos en el código o establecimiento
+#Botamos todas las filas con valores nulos en el código o establecimiento, pues estas son las que se supone que deben ser únicas salvo casos excepcionales
 df=df.dropna(subset = ['CODIGO', 'ESTABLECIMIENTO'])
 
 print(df)
@@ -111,21 +125,62 @@ df['TELEFONO'] = df['TELEFONO'].apply(lambda x: x[0:8] if len(x) >= 8  else None
 
 
 #Contamos las repeticiones de directores
-#print(df['DIRECTOR'].unique())
+
 print(df.DIRECTOR.value_counts())
 
-df = df.drop(df[df.DIRECTOR=="---"].index)
-df = df.drop(df[df.DIRECTOR=="."].index)
-df = df.drop(df[df.DIRECTOR=="--"].index)
-df = df.drop(df[df.DIRECTOR=="----"].index)
-df = df.drop(df[df.DIRECTOR=="-"].index)
-df = df.drop(df[df.DIRECTOR==" "].index)
-df = df.drop(df[df.DIRECTOR=="-----"].index)
-df = df.drop(df[df.DIRECTOR=="SIN DATO"].index)
-df = df.drop(df[df.DIRECTOR=="--------------"].index)
-
+#Convertimos en NaN todos 
+df['DIRECTOR']=df['DIRECTOR'].replace('.',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('..',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('...',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('-',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('--',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('---',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('----',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('-----',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('-------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('--------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('---------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('----------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('-----------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('------------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('-------------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('--------------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('---------------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('----------------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('-----------------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('-------------------',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('0',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('X',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace(' ',np.NaN)
+df['DIRECTOR']=df['DIRECTOR'].replace('SIN DATO',np.NaN)
 
 print("\n",df.DIRECTOR.value_counts())
+
+
+
+
+#No parece haber mucho qué limpiar en distritos ni supervisor
+#print(df.SUPERVISOR.value_counts())
+#print(df.DISTRITO.value_counts())
+
+
+
+
+#Area
+
+print("\n",df.AREA.value_counts())
+print(df[df.AREA=="SIN ESPECIFICAR"].index)
+
+
+
+
+
+
+
+# Creamos el csv
+df.to_csv('DatosMINEDUCLimpios.csv')
+
 
 
 
