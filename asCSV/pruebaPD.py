@@ -36,6 +36,9 @@ df = pd.concat([ALTA_VERAPAZ,BAJA_VERAPAZ,CHIMALTENANGO,CHIQUIMULA,CIUDAD_CAPITA
 #Listamos los nombres de las columnas
 list(df.keys())
 
+#Se borran todas las filas duplicadas
+df=df.drop_duplicates()
+
 #Observamos los establecimientos y códigos nulos
 df['ESTABLECIMIENTO'].isna().sum()
 df['CODIGO'].isna().sum()
@@ -106,6 +109,23 @@ df.DIRECCION = df.DIRECCION.replace(setFaltasDireccion, None)
 df['TELEFONO'] = df['TELEFONO'].apply(lambda x: str(x))
 df['TELEFONO'] = df['TELEFONO'].apply(lambda x: x[0:8] if len(x) >= 8  else None)
 
+
+#Contamos las repeticiones de directores
+#print(df['DIRECTOR'].unique())
+print(df.DIRECTOR.value_counts())
+
+df = df.drop(df[df.DIRECTOR=="---"].index)
+df = df.drop(df[df.DIRECTOR=="."].index)
+df = df.drop(df[df.DIRECTOR=="--"].index)
+df = df.drop(df[df.DIRECTOR=="----"].index)
+df = df.drop(df[df.DIRECTOR=="-"].index)
+df = df.drop(df[df.DIRECTOR==" "].index)
+df = df.drop(df[df.DIRECTOR=="-----"].index)
+df = df.drop(df[df.DIRECTOR=="SIN DATO"].index)
+df = df.drop(df[df.DIRECTOR=="--------------"].index)
+
+
+print("\n",df.DIRECTOR.value_counts())
 
 
 
