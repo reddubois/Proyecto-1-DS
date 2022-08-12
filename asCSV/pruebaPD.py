@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 #Se importan los csv de cada uno de los departamentos
 ALTA_VERAPAZ = pd.read_csv('ALTA VERAPAZ.csv')
@@ -48,5 +49,8 @@ print(df)
 #Contamos las repeticiones de establecimientos
 print(df.ESTABLECIMIENTO.value_counts())
 
-
+#Removemos acentos
+cols = df.select_dtypes(include=[object]).columns
+df[cols] = df[cols].apply(lambda x: x.str.normalize('NFKD').str.encode('ascii', errors='ignore').str.decode('utf-8'))
+print("\n",df.ESTABLECIMIENTO.value_counts())
 
