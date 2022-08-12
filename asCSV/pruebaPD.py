@@ -80,3 +80,16 @@ df = df.assign(MUNICIPIO = lambda x: np.where(x.DEPARTAMENTO == "CIUDAD CAPITAL"
 # Las entradas de la variable DEPARTAMENTO para establecimientos fuera de la capital quedan invariantes. 
 
 df = df.assign(DEPARTAMENTO = lambda x: np.where(x.DEPARTAMENTO == "CIUDAD CAPITAL", "GUATEMALA", x.DEPARTAMENTO))
+
+# DIRECCION
+# Esta variable viene en multiples formatos, con diversidad de tipos de errores. Múltiples direcciones son muy breves,
+# indicando incluso solo el barrio o la avenida en la que se encuentran. Sin embargo, se opta por mantener esta poca
+# informacion en lugar de invalidar la direccion. En general, no se valida si la direccion de los establecimientos
+# en realidad existe. Nos limitamos a validar direcciones claramente erroneas, constituidas por un par de
+# caracteres invalidos, como "---". Este grupo de direcciones se redefinen a None,
+# manteniendo la entrada de establecimiento en el set de datos.
+# Una breve exploracion muestra que la dirección se presenta como algun elemento en el siguiente conjunto
+# {"-", "--", "---", ".", ""}
+
+setFaltasDireccion = ['-', '--', '---', '.']
+df.DIRECCION = df.DIRECCION.replace(setFaltas, None)
