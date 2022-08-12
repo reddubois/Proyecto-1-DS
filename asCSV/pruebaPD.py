@@ -54,3 +54,29 @@ cols = df.select_dtypes(include=[object]).columns
 df[cols] = df[cols].apply(lambda x: x.str.normalize('NFKD').str.encode('ascii', errors='ignore').str.decode('utf-8'))
 print("\n",df.ESTABLECIMIENTO.value_counts())
 
+
+
+
+
+
+
+
+# ZONA
+# Actualmente, los establecimientos de la ciudad capital tienen en sus entradas de DEPARTAMENTO y MUNICIPIO valores distintos
+# a los esperados, i.e. GUATEMALA Y CIUDAD DE GUATEMALA. En su lugar, DEPARTAMENTO guarda el municipio del establecimiento,
+# mientras que MUNICIPIO guarda la zona de la capital en la que recide. La informacion de la zona se traslada a
+# una nueva variable llamada ZONA, cuyas entradas son None para establecimientos fuera de la ciudad capital.
+
+df = df.assign(ZONA = lambda x: np.where(x.DEPARTAMENTO == "CIUDAD CAPITAL", x.MUNICIPIO, None))
+
+# MUNICIPIO
+# Ahora, procedemos a corregir la informacion sobre los municipios de la ciudad capital.
+# Las entradas de la variable MUNICIPIO para establecimientos fuera de la capital quedan invariantes. 
+
+df = df.assign(MUNICIPIO = lambda x: np.where(x.DEPARTAMENTO == "CIUDAD CAPITAL", x.DEPARTAMENTO, x.MUNICIPIO))
+
+# DEPARTAMENTO
+# Se corrige la entrada de DEPARTAMENTO de los establecimientos en la ciudad capital, la cual se redefine a "GUATEMALA".
+# Las entradas de la variable DEPARTAMENTO para establecimientos fuera de la capital quedan invariantes. 
+
+df = df.assign(DEPARTAMENTO = lambda x: np.where(x.DEPARTAMENTO == "CIUDAD CAPITAL", "GUATEMALA", x.DEPARTAMENTO))
