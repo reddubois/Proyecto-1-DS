@@ -185,7 +185,31 @@ df.to_csv('DatosMINEDUCLimpios.csv')
 
 
 
+#Nivel
 
+#AltaVerapaz <- "DIVERSIFICADO"
+#BajaVerapaz <- "DIVERSIFICADO"
+#Chimaltenango <- "DIVERSIFICADO"
+#Chiquimula <- "DIVERSIFICADO"
+#CiudadCapital <- "DIVERSIFICADO"
+#ElProgreso <- "DIVERSIFICADO"
+#Escuintla <- "DIVERSIFICADO"
+#Guatemala <- "DIVERSIFICADO"
+#Huehuetenango <- "DIVERSIFICADO"
+#Izabal <- "DIVERSIFICADO"
+#Jalapa <- "DIVERSIFICADO"
+#Jutiapa <- "DIVERSIFICADO"
+#Peten <- "DIVERSIFICADO"
+#Quetzaltenango <- "DIVERSIFICADO"
+#Quiche <- "DIVERSIFICADO"
+#Retalhuleu <- "DIVERSIFICADO"
+#Sacatepequez <- "DIVERSIFICADO"
+#SanMarcos <- "DIVERSIFICADO"
+#SantaRosa <- "DIVERSIFICADO"
+#Solola <- "DIVERSIFICADO"
+#Suchitepequez <- "DIVERSIFICADO"
+#Totonicapan <- "DIVERSIFICADO"
+#Zacapa <- "DIVERSIFICADO"
 
 
 
